@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lhd.msi.module.sys.dao.SysUserMapper">
+
+    <select id="selectUserPageWithCustomSqlSegment" resultType="com.lhd.msi.module.sys.model.vo.SysUserVo">
+        select id, username, nickname
+        from sys_user
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectUserPageWithDto" resultType="com.lhd.msi.module.sys.model.vo.SysUserVo">
+        select id, username, nickname
+        from sys_user
+        <where>
+            <if test="dto.username != null and dto.username != ''">
+                and username = #{dto.username}
+            </if>
+            <if test="dto.nickname != null and dto.nickname != ''">
+                and nickname like concat('%', #{dto.nickname}, '%')
+            </if>
+            <if test="dto.startCreateTime != null and dto.endCreateTime != null">
+                and create_time >= #{dto.startCreateTime}
+                and create_time <![CDATA[ <= ]]> #{dto.endCreateTime}
+            </if>
+        </where>
+        order by create_time
+    </select>
+</mapper>

@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: msi
+  profiles:
+    active: @profileActive@
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    servlet:
+      # fix程序启动后接口第一次请求慢
+      load-on-startup: -1
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    banner: false

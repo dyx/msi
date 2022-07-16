@@ -1,0 +1,64 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    container_name: msi-mysql
+    environment:
+      # https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: msi
+      MYSQL_ROOT_HOST: '%'
+      TZ: Asia/Shanghai
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --default-time_zone='+8:00'
+      --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+      --log_timestamps=SYSTEM
+    networks:
+      network:
+        ipv4_address: 192.168.1.100
+    ports:
+      - "3306:3306"
+    volumes:
+      - ~/msi/mysql/data:/var/lib/mysql
+      - ~/msi/mysql/conf:/etc/mysql/conf.d
+      - ~/msi/mysql/init:/docker-entrypoint-initdb.d/
+    restart: on-failure
+
+  backend:
+    build: .
+    image: msi-biz
+    container_name: msi-biz
+    depends_on:
+      - db
+    networks:
+      network:
+        ipv4_address: 192.168.1.150
+    ports:
+      - "8001:8080"
+    volumes:
+      - ~/msi/logs:/logs
+    restart: on-failure
+
+  frontend:
+    image: nginx:1.22
+    container_name: msi-web
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      network:
+        ipv4_address: 192.168.1.200
+    ports:
+      - "8002:80"
+    volumes:
+      - ~/msi/nginx/conf.d:/etc/nginx/conf.d
+      - ~/msi/nginx/html:/usr/share/nginx/html:ro
+    restart: on-failure
+
+networks:
+  network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24

@@ -1,0 +1,17 @@
+html, body {
+    margin:0;
+    padding:0;
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+}
+
+.el-container {
+    height: 100%;
+}
+
+.el-dialog .el-dialog__body {
+    padding: 10px 20px 20px 20px;
+}
