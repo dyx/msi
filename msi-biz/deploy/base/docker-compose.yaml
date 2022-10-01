@@ -38,7 +38,7 @@ services:
     ports:
       - "8001:8080"
     volumes:
-      - ~/msi/logs:/logs
+      - ~/msi/logs:/logs/msi-biz/logs
     restart: on-failure
 
   frontend:

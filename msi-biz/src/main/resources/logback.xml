@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
 
-    <property name="path" value="./logs/msi-biz" />
-    <property name="name" value="server" />
+    <property name="path" value="./logs/msi-biz/logs/" />
+    <property name="name" value="msi-biz" />
 
     <!-- 输出到控制台 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

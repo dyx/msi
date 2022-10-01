@@ -5,10 +5,9 @@ spring:
     active: @profileActive@
   mvc:
     pathmatch:
+      # fix [Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException]
+      # issues https://github.com/springfox/springfox/issues/3462#issuecomment-978707909
       matching-strategy: ant_path_matcher
-    servlet:
-      # fix程序启动后接口第一次请求慢
-      load-on-startup: -1
 
 mybatis-plus:
   configuration:

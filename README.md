@@ -1,4 +1,4 @@
-# Management System Initializr
+# Management System Initializer
 基于SpringBoot2+Vue3前后端分离的管理系统初始化器
 
 ## 功能列表
@@ -11,6 +11,7 @@
 - [x] 统一接口返回值 R
 - [x] 统一接口时间格式 JacksonConfig
 - [x] 统一接口日志 HttpLogAop
+- [ ] 统一操作日志
 - [x] 统一全局异常 GlobalExceptionHandler
 - [x] 多环境配置文件 application.yml>spring.profiles.active=@profileActive@
 - [ ] 代码生成器
@@ -92,6 +93,6 @@ unzip msi.zip && cd msi_package && bash upgrade.sh
 ```
 
 ## 待办
-- ~~Windows脚本~~
-  - 安装Git软件，使用`Git Bash`执行Shell脚本实现
+- Windows脚本
+  - 临时方案，安装Git软件，使用`Git Bash`执行Shell脚本实现
 - 参考`docker multi-stage builds`优化包体积及构建速度

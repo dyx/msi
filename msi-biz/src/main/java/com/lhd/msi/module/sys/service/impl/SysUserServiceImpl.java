@@ -13,6 +13,7 @@ import com.lhd.msi.module.sys.model.dto.*;
 import com.lhd.msi.module.sys.model.vo.SysUserDetailVo;
 import com.lhd.msi.module.sys.model.vo.SysUserVo;
 import com.lhd.msi.module.sys.service.SysUserService;
+import com.lhd.msi.utils.CommonConvertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	public Page<SysUserVo> getUserPage(SysUserPageQuery query) {
-		Page<SysUser> doPage = page(new Page<>(query.getCurrent(), query.getSize()),
+
+		Page<SysUser> doPage = page(
+				CommonConvertUtil.pageQuery2Page(query, SysUser.class),
 				Wrappers.<SysUser>lambdaQuery()
-						.eq(StrUtil.isNotBlank(query.getUsername()), SysUser::getUsername, query.getUsername())
-						.like(StrUtil.isNotBlank(query.getNickname()), SysUser::getNickname, query.getNickname()));
+				.eq(StrUtil.isNotBlank(query.getUsername()), SysUser::getUsername, query.getUsername())
+				.like(StrUtil.isNotBlank(query.getNickname()), SysUser::getNickname, query.getNickname()));
 		return SysUserConverter.INSTANCE.doPage2voPage(doPage);
 	}
 
